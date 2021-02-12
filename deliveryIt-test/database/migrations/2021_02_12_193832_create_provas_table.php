@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCorredoresTable extends Migration
+class CreateProvasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateCorredoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('corredores', function (Blueprint $table) {
+        Schema::create('provas', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->string('cpf')->unique();
-            $table->date('data_nascimento');
+            $table->integer('tipo_prova');
+            $table->date('data');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateCorredoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('corredores');
+        Schema::dropIfExists('provas');
     }
 }
