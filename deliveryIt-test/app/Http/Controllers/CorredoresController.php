@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CorredoresService;
-
 class CorredoresController extends Controller
 {
 
@@ -30,13 +29,27 @@ class CorredoresController extends Controller
     public function show($id){}
 
     public function store(Request $request){
-        $this->corredoresService->store($request);
-        return $this->index();
+       $store = $this->corredoresService->store($request);
+       
+        if ($store['success'] === false) {
+            \Toastr::warning('Esqueceu de preencher algum campo?', 'Erro', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+       } 
+
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+        return redirect()->route('corredores');
     }
 
     public function update($id, Request $request){
-        $this->corredoresService->update($request, $id);
-        return $this->index();
+       $update = $this->corredoresService->update($request, $id);
+
+       if ($update['success'] === false) {
+            \Toastr::warning('Esqueceu de preencher algum campo?', 'Erro', ["positionClass" => "toast-top-right"]);
+       } 
+
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+
     }
 
     public function delete(){

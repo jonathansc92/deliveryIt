@@ -52,7 +52,7 @@ class CorredoresProvasService {
 
         
         if ($anos < 18) {
-            return false;
+            return ['success' => false, 'messages' => 'O corredor é menor de idade'];
         }
 
         $provasCorredor = $this->get($request->corredores_id);
@@ -63,7 +63,7 @@ class CorredoresProvasService {
             foreach($provasCorredor as $prova) {
 
                 if ($provaAtual->data === $prova->data) {
-                    return false;
+                    return ['success' => false, 'messages' => 'O corredor já possui uma prova nesse mesmo dia'];
                 }
             }
         }
