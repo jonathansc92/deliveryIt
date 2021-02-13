@@ -12,16 +12,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="/corredores">
@@ -32,14 +22,14 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="/provas">
-                    <i class="fas fa-tachometer-fastest"></i>
+                    <i class="fas fa-dumbbell"></i>
                     <span>Provas</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="/provas">
-                    <i class="fas fa-tachometer-fastest"></i>
+                    <i class="fas fa-medal"></i>
                     <span>Resultados</span>
                 </a>
             </li>
