@@ -20,7 +20,7 @@ class CorredoresProvasService {
     private $corredorService;
     private $provaService;
 
-    public function __construct(CorredoresProvasRepository $respository, CorredoresProvasValidator $validator, CorredoresService $corredoresService, ProvasService $provaService){
+    public function __construct(CorredoresProvasRepository $respository, CorredoresProvasValidator $validator, CorredoresService $corredorService, ProvasService $provaService){
         $this->respository = $respository;
         $this->validator = $validator;
         $this->corredorService = $corredorService;
