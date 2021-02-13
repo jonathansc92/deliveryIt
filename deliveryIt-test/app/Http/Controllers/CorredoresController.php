@@ -37,7 +37,7 @@ class CorredoresController extends Controller
        } 
 
         \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
-        return redirect()->route('corredores');
+        return redirect('corredores');
     }
 
     public function update($id, Request $request){
