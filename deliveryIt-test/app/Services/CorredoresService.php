@@ -40,7 +40,10 @@ class CorredoresService {
         
         try {
            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-        //    $request['created_at']
+
+           $request['created_at'] = \Carbon\Carbon::now();
+           $request['updated_at'] = \Carbon\Carbon::now();
+
            $this->respository->create($request->all());
         } catch (ValidatorException $e) {
             return Response::json([
@@ -54,6 +57,9 @@ class CorredoresService {
         
         try {
            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+        //    $request['updated_at'] = \Carbon\Carbon::now();
+
            $this->respository->update($request->all(), $id);
         } catch (ValidatorException $e) {
             return Response::json([
