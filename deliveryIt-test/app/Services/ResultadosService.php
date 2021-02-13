@@ -30,7 +30,7 @@ class ResultadosService {
 
     public function get($id){
 
-        $resultado = $this->respository->find($id);
+        $resultado = $this->respository->with(['corredores', 'provas'])->find($id);
 
         return $resultado;
 
@@ -62,4 +62,37 @@ class ResultadosService {
             ]);
         }
     }
+  
+    public function getResultadosByProvas($idProva, $categoria = null) {
+
+        $resultados = \App\Resultados::select(
+            'resultados.hora_inicio as SUM(hr)',
+            'resultados.hora_conclusao',
+            'corredores.data_nascimento',
+            'provas.tipo_prova',
+            'corredores.nome',
+            'resultados.corredores_id',
+            'resultados.provas_id',
+            \DB::raw('TIMEDIFF(resultados.hora_inicio, resultados.hora_conclusao) as dif'),
+            \DB::raw('TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) AS idade')
+        )
+        ->join('corredores', 'resultados.corredores_id', '=', 'corredores.id')
+        ->join('provas', 'resultados.provas_id', '=', 'provas.id')
+        ->where('resultados.provas_id', $idProva);
+
+        if($categoria) {
+            $idade = explode('-', $categoria, 2);
+
+            if (count($idade) > 1) {
+                $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $idade[0])
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) <" . $idade[1]);
+            } else{
+                $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $categoria);
+            }
+
+        }
+
+        return $resultados->orderBy('dif', 'DESC')->get();
+    }
+
 }

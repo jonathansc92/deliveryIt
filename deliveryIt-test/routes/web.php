@@ -38,3 +38,7 @@ Route::get('/resultados/edit/{id}', 'ResultadosController@edit');
 Route::put('/resultados/update/{id}', 'ResultadosController@update');
 // Route::post('/resultados/delete', 'ResultadosController@delete');
 
+Route::get('/classificacao/{id}', 'ClassificacaoController@index');
+Route::get('/classificacao/{id}/{idade}', 'ClassificacaoController@classificaoIdade');
+
+

@@ -35,6 +35,10 @@
                                                 <i class="fa fa-edit"></i> 
                                                     Editar
                                                 </a>
+                                                <a class="btn btn-success" href="/classificacao/{{ $prova->id }}" target="_blank">
+                                                <i class="fa fa-medal"></i> 
+                                                   Ver Classificação Geral
+                                                </a>
                                             </td>
                                         </tr>
                                     </tbody>

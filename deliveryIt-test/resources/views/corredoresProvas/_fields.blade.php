@@ -9,14 +9,19 @@
 
       <div class="form-group">
         {!! Form::label('corredores_id', 'Corredor') !!} 
-        <select class="corredoresItem form-control" name="corredores_id" value="1"></select>
-        <!-- {!! Form::select('corredores_id', [], isset($corredorProva) ? $corredorProva->corredores_id : 1, ['class'=>'corredoresItem form-control']) !!} -->
+        <select class="corredoresItem form-control" name="corredores_id">
+          @if(isset($corredorProva))
+            <option value="{{ $corredorProva->corredores->id }}" selected>{{ $corredorProva->corredores->nome }}</option>
+          @endif
+         </select> 
       </div>
 
       <div class="form-group">
         {!! Form::label('provas_id', 'Prova') !!} 
         <select class="provasItem form-control" name="provas_id">
-        <option value="volvo" selected>Volvo</option>
+          @if(isset($corredorProva))
+            <option value="{{ $corredorProva->provas->id }}" selected>{{ $corredorProva->provas->tipo_prova }}km - {{ $corredorProva->provas->data }}</option>
+          @endif
         </select>
       </div>
 

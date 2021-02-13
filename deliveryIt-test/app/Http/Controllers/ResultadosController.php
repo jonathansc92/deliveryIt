@@ -25,7 +25,6 @@ class ResultadosController extends Controller
 
     public function edit($id){
         $resultado = $this->service->get($id);
-        dd($resultado);
         return view('resultados.addOrEdit', compact('resultado'));
     }
 
