@@ -22,6 +22,13 @@ Route::get('/provas/edit/{id}', 'ProvasController@edit');
 Route::put('/provas/update/{id}', 'ProvasController@update');
 // Route::post('/provas/delete', 'ProvasController@delete');
 
+Route::get('/corredores-provas', 'CorredoresProvasController@index');
+Route::get('/corredores-provas/create', 'CorredoresProvasController@create');
+Route::post('/corredores-provas/store', 'CorredoresProvasController@store');
+Route::get('/corredores-provas/edit/{id}', 'CorredoresProvasController@edit');
+Route::put('/corredores-provas/update/{id}', 'CorredoresProvasController@update');
+// Route::post('/corredores-provas/delete', 'CorredoresProvasController@delete');
+
 Route::get('/resultados', 'ResultadosController@index');
 Route::get('/resultados/create', 'ResultadosController@create');
 Route::post('/resultados/store', 'ResultadosController@store');

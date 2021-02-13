@@ -28,6 +28,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="/corredores-provas">
+                    <i class="fas fa-running"></i>
+                    <span>Corredores em Provas</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="/resultados">
                     <i class="fas fa-medal"></i>
                     <span>Resultados</span>
