@@ -16,4 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::resource('/corredores', 'CorredoresController');
+
 Route::get('/corredores', 'CorredoresController@index');
+Route::get('/corredores/create', 'CorredoresController@create');
+Route::post('/corredores/store', 'CorredoresController@store');
+Route::get('/corredores/edit/{id}', 'CorredoresController@edit');
+Route::put('/corredores/update/{id}', 'CorredoresController@update');
+Route::post('/corredores/delete', 'CorredoresController@delete');
+
