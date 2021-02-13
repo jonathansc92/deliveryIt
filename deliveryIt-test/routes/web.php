@@ -22,3 +22,10 @@ Route::get('/provas/edit/{id}', 'ProvasController@edit');
 Route::put('/provas/update/{id}', 'ProvasController@update');
 // Route::post('/provas/delete', 'ProvasController@delete');
 
+Route::get('/resultados', 'ResultadosController@index');
+Route::get('/resultados/create', 'ResultadosController@create');
+Route::post('/resultados/store', 'ResultadosController@store');
+Route::get('/resultados/edit/{id}', 'ResultadosController@edit');
+Route::put('/resultados/update/{id}', 'ResultadosController@update');
+// Route::post('/resultados/delete', 'ResultadosController@delete');
+

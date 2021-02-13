@@ -28,7 +28,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/provas">
+                <a class="nav-link" href="/resultados">
                     <i class="fas fa-medal"></i>
                     <span>Resultados</span>
                 </a>
