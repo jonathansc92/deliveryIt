@@ -76,4 +76,11 @@ class CorredoresService {
             }
         }
     }
+
+    
+    public function dataAjax($search){
+        return \App\Corredores::select("id","nome")
+                    ->where('nome','LIKE',"%$search%")
+                    ->get();
+    }
 }

@@ -30,11 +30,20 @@ class CorredoresProvasController extends Controller
     public function show($id){}
 
     public function store(Request $request){
-        $this->service->store($request);
+        $store = $this->service->store($request);
+
+        if ($store['success'] === false) {
+            \Toastr::warning($store['messages'], 'Erro', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+       } 
+
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+
         return $this->index();
     }
 
     public function update($id, Request $request){
+        dd($request->all());
         $this->service->update($request, $id);
         return $this->index();
     }

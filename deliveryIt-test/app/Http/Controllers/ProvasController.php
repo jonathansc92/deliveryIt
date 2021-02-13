@@ -42,4 +42,16 @@ class ProvasController extends Controller
     public function delete(){
 
     }
+
+    public function dataAjax(Request $request)
+    {
+    	$data = [];
+
+        if ($request->has('q')) {
+            $search = $request->q;
+            $data = $this->service->dataAjax($search);
+        }
+
+        return response()->json($data);
+    }
 }

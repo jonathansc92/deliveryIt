@@ -28,8 +28,8 @@
                                     <tfoot>
                                         <tr>
                                             <td>{{ $corredorProva->id }}</td>
-                                            <td>{{ $corredorProva->corredores->nome }}</td>
-                                            <td>{{ $corredorProva->provas->tipo_prova }} km</td>
+                                            <td>{{ $corredorProva->corredores["nome"] }}</td>
+                                            <td>{{ $corredorProva->provas["tipo_prova"] }} km</td>
                                             <td>
                                                 <a class="btn btn-primary" href="/corredores-provas/edit/{{ $corredorProva->id }}">
                                                 <i class="fa fa-edit"></i> 

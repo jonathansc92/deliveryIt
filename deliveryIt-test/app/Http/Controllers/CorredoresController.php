@@ -7,14 +7,14 @@ use App\Services\CorredoresService;
 class CorredoresController extends Controller
 {
 
-    protected $corredoresService;
+    protected $service;
 
-    public function __construct(CorredoresService $corredoresService){
-        $this->corredoresService = $corredoresService;
+    public function __construct(CorredoresService $service){
+        $this->service = $service;
     }
 
     public function index(){
-        return view('corredores.corredoresLista')->with(['corredores' => $this->corredoresService->getAll() ]);
+        return view('corredores.corredoresLista')->with(['corredores' => $this->service->getAll() ]);
     }
 
     public function create(){
@@ -22,14 +22,14 @@ class CorredoresController extends Controller
     }
 
     public function edit($id){
-        $corredor = $this->corredoresService->get($id);
+        $corredor = $this->service->get($id);
         return view('corredores.addOrEdit', compact('corredor'));
     }
 
     public function show($id){}
 
     public function store(Request $request){
-       $store = $this->corredoresService->store($request);
+       $store = $this->service->store($request);
        
         if ($store['success'] === false) {
             \Toastr::warning('Esqueceu de preencher algum campo?', 'Erro', ["positionClass" => "toast-top-right"]);
@@ -41,7 +41,7 @@ class CorredoresController extends Controller
     }
 
     public function update($id, Request $request){
-       $update = $this->corredoresService->update($request, $id);
+       $update = $this->service->update($request, $id);
 
        if ($update['success'] === false) {
             \Toastr::warning('Esqueceu de preencher algum campo?', 'Erro', ["positionClass" => "toast-top-right"]);
@@ -54,5 +54,17 @@ class CorredoresController extends Controller
 
     public function delete(){
 
+    }
+
+    public function dataAjax(Request $request)
+    {
+    	$data = [];
+
+        if ($request->has('q')) {
+            $search = $request->q;
+            $data = $this->service->dataAjax($search);
+        }
+
+        return response()->json($data);
     }
 }

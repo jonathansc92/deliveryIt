@@ -30,7 +30,7 @@ class CorredoresProvasService {
 
     public function getAll(){
 
-        $corredoresProvas = $this->respository->all();
+        $corredoresProvas = $this->respository->with(['corredores','provas'])->all();
 
         return $corredoresProvas;
 
@@ -38,9 +38,7 @@ class CorredoresProvasService {
 
     public function get($id){
 
-        $corredorProva = $this->respository->with(['corredores','provas'])->find($id);
-
-        return $corredorProva;
+       return $this->respository->with(['corredores','provas'])->find($id);
 
     }
 
@@ -55,33 +53,37 @@ class CorredoresProvasService {
             return ['success' => false, 'messages' => 'O corredor é menor de idade'];
         }
 
-        $provasCorredor = $this->get($request->corredores_id);
+        $provasCorredor = $this->respository->findWhere(['corredores_id' => $request->corredores_id]);
 
         $provaAtual = $this->provaService->get($request->provas_id);
 
         if ($provasCorredor->count() > 1) {
             foreach($provasCorredor as $prova) {
 
-                if ($provaAtual->data === $prova->data) {
+                if ($provaAtual->data === $prova->provas->data) {
                     return ['success' => false, 'messages' => 'O corredor já possui uma prova nesse mesmo dia'];
                 }
             }
         }
+      
 
-        return true;
+        return ['success' => true];
 
     }
 
     public function store(Request $request) {
         
         try {
-           $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-           $regras = $this->regras($request);
-        //    $request['created_at']
-        if ($regras === true) {
+            $regras = $this->regras($request);
+         
+            if ($regras['success'] === false) {
+                return $regras;
+            }
+
             $this->respository->create($request->all());
-        }
+            
         
         } catch (ValidatorException $e) {
             return Response::json([

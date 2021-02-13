@@ -62,4 +62,10 @@ class ProvasService {
             ]);
         }
     }
+
+    public function dataAjax($search){
+        return \App\Provas::select("id","tipo_prova", "data")
+        ->where('tipo_prova','LIKE',"%$search%")
+        ->get();
+    }
 }
