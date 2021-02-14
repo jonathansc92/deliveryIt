@@ -50,7 +50,7 @@ class CorredoresProvasService {
         $anos = \Carbon\Carbon::now()->diffInYears($dataNascimento);
         
         if ($anos < 18) {
-            return ['data' => ['messages' => 'O corredor é menor de idade', false]];
+            return ['data' => ['messages' => 'O corredor é menor de idade', 405]];
         }
 
         $provasCorredor = $this->respository->findWhere(['corredores_id' => $request->corredores_id]);
@@ -61,7 +61,7 @@ class CorredoresProvasService {
             foreach($provasCorredor as $prova) {
 
                 if ($provaAtual->data === $prova->provas->data) {
-                    return ['data' => ['messages' => 'O corredor já possui uma prova nesse mesmo dia', false]];
+                    return ['data' => ['messages' => 'O corredor já possui uma prova nesse mesmo dia', 405]];
                 }
             }
         }
@@ -80,7 +80,7 @@ class CorredoresProvasService {
 
            $regras = $this->regras($request);
 
-            if (!$regras['data'][0]){
+            if ($regras['data'][0] === 405){
                 return $regras;
             }
 
@@ -108,7 +108,7 @@ class CorredoresProvasService {
 
            $regras = $this->regras($request);
 
-            if (!$regras['data'][0]){
+            if ($regras['data'][0] === 405){
                 return $regras;
             }
 
