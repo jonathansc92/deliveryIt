@@ -1,12 +1,11 @@
-<?php 
-
+<?php
 namespace App\Validators;
 
 use \Prettus\Validator\LaravelValidator;
 use \Prettus\Validator\Contracts\ValidatorInterface;
 
-class ResultadosValidator extends LaravelValidator {
-
+class ResultadosValidator extends LaravelValidator 
+{
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
             'provas_id' => 'required',
@@ -21,5 +20,4 @@ class ResultadosValidator extends LaravelValidator {
             'hora_conclusao'=> 'required'
         ]
     ];
-
 }

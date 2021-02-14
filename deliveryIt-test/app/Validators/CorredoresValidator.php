@@ -1,12 +1,11 @@
-<?php 
-
+<?php
 namespace App\Validators;
 
 use \Prettus\Validator\LaravelValidator;
 use \Prettus\Validator\Contracts\ValidatorInterface;
 
-class CorredoresValidator extends LaravelValidator {
-
+class CorredoresValidator extends LaravelValidator 
+{
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
             'nome' => 'required',
@@ -19,5 +18,4 @@ class CorredoresValidator extends LaravelValidator {
             'data_nascimento'=> 'required'
         ]
     ];
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 class Resultados extends Model
 {
     protected $table = 'resultados';
-
     protected $fillable = [
         'corredores_id', 
         'provas_id', 
@@ -26,5 +24,5 @@ class Resultados extends Model
     {
         return $this->belongsTo(Provas::class, 'provas_id', 'id');
     }
-
 }
+

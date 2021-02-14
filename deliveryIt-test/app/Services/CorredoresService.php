@@ -1,5 +1,4 @@
 <?php 
-
 namespace App\Services;
 
 use App\Repositories\CorredoresRepository;
@@ -8,7 +7,6 @@ use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\Exceptions\ValidatorException;
 use Exception;
 use Illuminate\Database\QueryException;
-
 use Illuminate\Http\Request;
 
 class CorredoresService {
@@ -16,32 +14,26 @@ class CorredoresService {
     private $respository;
     private $validator;
 
-    public function __construct(CorredoresRepository $respository, CorredoresValidator $validator){
+    public function __construct(CorredoresRepository $respository, CorredoresValidator $validator)
+    {
         $this->respository = $respository;
         $this->validator = $validator;
     }
 
-
-    public function getAll(){
-
-        $corredores = $this->respository->all();
-
-        return $corredores;
-
+    public function getAll()
+    {
+        return $this->respository->all();
     }
 
-    public function get($id){
-
-        $corredor = $this->respository->find($id);
-
-        return $corredor;
-
+    public function get($id)
+    {
+        return $this->respository->find($id);
     }
 
-    public function store(Request $request) {
-        
+    public function store(Request $request) 
+    {
         try {
-           $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+           $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
            $request['created_at'] = \Carbon\Carbon::now();
            $request['updated_at'] = \Carbon\Carbon::now();
@@ -50,8 +42,7 @@ class CorredoresService {
 
            return ['data' => ['messages' => 'Salvo com sucesso!', 201]];
         } catch (Exception $e) {
-
-            switch(get_class($e))
+            switch (get_class($e))
             {
                 case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
                 case ValidatorException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
@@ -61,10 +52,10 @@ class CorredoresService {
         }
     }
 
-    public function update(Request $request, $id) {
-        
+    public function update(Request $request, $id) 
+    {
         try {
-           $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+           $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
            
            $request['updated_at'] = \Carbon\Carbon::now();
            
@@ -72,7 +63,6 @@ class CorredoresService {
 
            return ['data' => ['messages' => 'Atualizado com sucesso!', 201]];
         } catch (Exception $e) {
-
             switch(get_class($e))
             {
                 case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
@@ -83,16 +73,14 @@ class CorredoresService {
         }
     }
 
-    public function delete($id) {
-        
+    public function delete($id) 
+    {
         try {
-
            $this->respository->delete($id);
 
            return ['data' => ['messages' => 'Removido com sucesso!', 200]];
         } catch (Exception $e) {
-
-            switch(get_class($e))
+            switch (get_class($e))
             {
                 case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
                 case Exception::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
@@ -102,9 +90,8 @@ class CorredoresService {
     }
 
     
-    public function dataAjax($search){
-        return \App\Corredores::select("id","nome")
-                    ->where('nome','LIKE',"%$search%")
-                    ->get();
+    public function dataAjax($search)
+    {
+        return \App\Corredores::select("id","nome")->where('nome','LIKE',"%$search%")->get();
     }
 }

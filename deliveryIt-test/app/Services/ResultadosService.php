@@ -1,5 +1,4 @@
 <?php 
-
 namespace App\Services;
 
 use App\Repositories\ResultadosRepository;
@@ -8,11 +7,10 @@ use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\Exceptions\ValidatorException;
 use Exception;
 use Illuminate\Database\QueryException;
-
 use Illuminate\Http\Request;
 
-class ResultadosService {
-
+class ResultadosService 
+{
     private $respository;
     private $validator;
 
@@ -21,27 +19,20 @@ class ResultadosService {
         $this->validator = $validator;
     }
 
-
-    public function getAll(){
-
-        $resultados = $this->respository->with(['corredores', 'provas'])->all();
-
-        return $resultados;
-
+    public function getAll()
+    {
+       return $this->respository->with(['corredores', 'provas'])->all();
     }
 
-    public function get($id){
-
-        $resultado = $this->respository->with(['corredores', 'provas'])->find($id);
-
-        return $resultado;
-
+    public function get($id)
+    {
+        return $this->respository->with(['corredores', 'provas'])->find($id);
     }
 
-    public function store(Request $request) {
-        
+    public function store(Request $request) 
+    {  
         try {
-           $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+           $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
            $request['created_at'] = \Carbon\Carbon::now();
            $request['updated_at'] = \Carbon\Carbon::now();
@@ -50,8 +41,7 @@ class ResultadosService {
 
            return ['data' => ['messages' => 'Salvo com sucesso!', 201]];
         } catch (Exception $e) {
-
-            switch(get_class($e))
+            switch (get_class($e))
             {
                 case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
                 case ValidatorException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
@@ -61,10 +51,10 @@ class ResultadosService {
         }
     }
 
-    public function update(Request $request, $id) {
-        
+    public function update(Request $request, $id) 
+    {
         try {
-           $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+           $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
            
            $request['updated_at'] = \Carbon\Carbon::now();
            
@@ -72,8 +62,7 @@ class ResultadosService {
 
            return ['data' => ['messages' => 'Atualizado com sucesso!', 201]];
         } catch (Exception $e) {
-
-            switch(get_class($e))
+            switch (get_class($e))
             {
                 case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
                 case ValidatorException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
@@ -83,16 +72,14 @@ class ResultadosService {
         }
     }
 
-    public function delete($id) {
-        
+    public function delete($id) 
+    {
         try {
-
            $this->respository->delete($id);
 
            return ['data' => ['messages' => 'Removido com sucesso!', 200]];
         } catch (Exception $e) {
-
-            switch(get_class($e))
+            switch  (get_class($e))
             {
                 case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
                 case Exception::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
@@ -101,8 +88,8 @@ class ResultadosService {
         }
     }
   
-    public function getResultadosByProvas($idProva, $categoria = null) {
-
+    public function getResultadosByProvas($idProva, $categoria = null) 
+    {
         $resultados = \App\Resultados::select(
             'resultados.hora_inicio as SUM(hr)',
             'resultados.hora_conclusao',
@@ -118,23 +105,24 @@ class ResultadosService {
         ->join('provas', 'resultados.provas_id', '=', 'provas.id')
         ->where('resultados.provas_id', $idProva);
 
-        if($categoria) {
+        if ($categoria) 
+        {
             $idade = explode('-', $categoria, 2);
 
-            if (count($idade) > 1) {
+            if (count($idade) > 1) 
+            {
                 $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $idade[0])
                     ->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) <" . $idade[1]);
-            } else{
+            } else {
                 $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $categoria);
             }
-
         }
 
         return $resultados->orderBy('dif', 'DESC')->get();
     }
 
-    public function getResultadosByProvasApi($idProva, $categoria = null) {
-
+    public function getResultadosByProvasApi($idProva, $categoria = null) 
+    {
         $resultados = \App\Resultados::select(
             'provas.tipo_prova',
             'corredores.nome',
@@ -146,19 +134,18 @@ class ResultadosService {
         ->join('provas', 'resultados.provas_id', '=', 'provas.id')
         ->where('resultados.provas_id', $idProva);
 
-        if($categoria) {
+        if ($categoria) 
+        {
             $idade = explode('-', $categoria, 2);
 
-            if (count($idade) > 1) {
+            if (count($idade) > 1) 
+            {
                 $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $idade[0])
                     ->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) <" . $idade[1]);
-            } else{
+            } else {
                 $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $categoria);
             }
-
         }
-
         return $resultados->get();
     }
-
 }

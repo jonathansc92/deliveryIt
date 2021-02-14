@@ -1,12 +1,11 @@
-<?php 
-
+<?php
 namespace App\Validators;
 
 use \Prettus\Validator\LaravelValidator;
 use \Prettus\Validator\Contracts\ValidatorInterface;
 
-class ProvasValidator extends LaravelValidator {
-
+class ProvasValidator extends LaravelValidator 
+{
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
             'tipo_prova' => 'required',
@@ -17,5 +16,4 @@ class ProvasValidator extends LaravelValidator {
             'data'=> 'required'
         ]
     ];
-
 }

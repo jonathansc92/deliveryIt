@@ -1,12 +1,11 @@
-<?php 
-
+<?php
 namespace App\Validators;
 
 use \Prettus\Validator\LaravelValidator;
 use \Prettus\Validator\Contracts\ValidatorInterface;
 
-class CorredoresProvasValidator extends LaravelValidator {
-
+class CorredoresProvasValidator extends LaravelValidator 
+{
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
             'corredores_id' => 'required',
@@ -17,5 +16,4 @@ class CorredoresProvasValidator extends LaravelValidator {
             'provas_id'  => 'required'
         ]
     ];
-
 }

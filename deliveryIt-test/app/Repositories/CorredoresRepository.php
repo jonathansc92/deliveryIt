@@ -1,14 +1,12 @@
-<?php 
-
+<?php
 namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 
-class CorredoresRepository extends BaseRepository {
-
-    function model()
+class CorredoresRepository extends BaseRepository 
+{
+    public function model()
     {
         return "App\\Corredores";
     }
-
 }
