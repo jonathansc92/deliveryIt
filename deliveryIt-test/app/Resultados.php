@@ -12,7 +12,9 @@ class Resultados extends Model
         'corredores_id', 
         'provas_id', 
         'hora_inicio',
-        'hora_conclusao'
+        'hora_conclusao', 
+        'created_at', 
+        'updated_at'
     ];
 
     public function corredores()

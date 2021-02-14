@@ -8,6 +8,6 @@ class Provas extends Model
 {
     protected $table = 'provas';
 
-    protected $fillable = ['tipo_prova', 'data'];
+    protected $fillable = ['tipo_prova', 'data', 'created_at', 'updated_at'];
 
 }

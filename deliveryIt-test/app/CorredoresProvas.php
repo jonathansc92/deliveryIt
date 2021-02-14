@@ -10,7 +10,9 @@ class CorredoresProvas extends Model
 
     protected $fillable = [
         'corredores_id', 
-        'provas_id'
+        'provas_id',
+        'created_at', 
+        'updated_at'
     ];
 
     public function corredores()

@@ -43,14 +43,20 @@ class ResultadosService {
         try {
            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
+           $request['created_at'] = \Carbon\Carbon::now();
+           $request['updated_at'] = \Carbon\Carbon::now();
+
            $this->respository->create($request->all());
+
+           return ['data' => ['messages' => 'Salvo com sucesso!', 201]];
         } catch (Exception $e) {
+
             switch(get_class($e))
             {
-                case QueryException::class : return ['success' => false, 'messages' => $e->getMessage()];
-                case ValidatorException::class : return ['success' => false, 'messages' => $e->getMessage()];
-                case Exception::class : return ['success' => false, 'messages' => $e->getMessage()];
-                default : return ['success' => false, 'messages' => get_class($e)];
+                case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                case ValidatorException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                case Exception::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                default : return ['data' => ['messages' => get_class($e), 1010]];
             }
         }
     }
@@ -59,14 +65,38 @@ class ResultadosService {
         
         try {
            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+           
+           $request['updated_at'] = \Carbon\Carbon::now();
+           
            $this->respository->update($request->all(), $id);
+
+           return ['data' => ['messages' => 'Atualizado com sucesso!', 201]];
         } catch (Exception $e) {
+
             switch(get_class($e))
             {
-                case QueryException::class : return ['success' => false, 'messages' => $e->getMessage()];
-                case ValidatorException::class : return ['success' => false, 'messages' => $e->getMessage()];
-                case Exception::class : return ['success' => false, 'messages' => $e->getMessage()];
-                default : return ['success' => false, 'messages' => get_class($e)];
+                case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                case ValidatorException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                case Exception::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                default : return ['data' => ['messages' => get_class($e), 1010]];
+            }
+        }
+    }
+
+    public function delete($id) {
+        
+        try {
+
+           $this->respository->delete($id);
+
+           return ['data' => ['messages' => 'Removido com sucesso!', 200]];
+        } catch (Exception $e) {
+
+            switch(get_class($e))
+            {
+                case QueryException::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                case Exception::class : return ['data' => ['messages' => $e->getMessage(), 1010]];
+                default : return ['data' => ['messages' => get_class($e), 1010]];
             }
         }
     }
@@ -101,6 +131,34 @@ class ResultadosService {
         }
 
         return $resultados->orderBy('dif', 'DESC')->get();
+    }
+
+    public function getResultadosByProvasApi($idProva, $categoria = null) {
+
+        $resultados = \App\Resultados::select(
+            'provas.tipo_prova',
+            'corredores.nome',
+            'resultados.corredores_id',
+            'resultados.provas_id',
+            \DB::raw('TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) AS idade')
+        )
+        ->join('corredores', 'resultados.corredores_id', '=', 'corredores.id')
+        ->join('provas', 'resultados.provas_id', '=', 'provas.id')
+        ->where('resultados.provas_id', $idProva);
+
+        if($categoria) {
+            $idade = explode('-', $categoria, 2);
+
+            if (count($idade) > 1) {
+                $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $idade[0])
+                    ->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) <" . $idade[1]);
+            } else{
+                $resultados->whereRaw("TIMESTAMPDIFF(YEAR, DATE(corredores.data_nascimento), NOW()) >" . $categoria);
+            }
+
+        }
+
+        return $resultados->get();
     }
 
 }
