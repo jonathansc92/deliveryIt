@@ -20,3 +20,17 @@
 - http://127.0.0.1:8000/api/classificacao/prova/{id} (get)
 - http://127.0.0.1:8000/api/classificacao/prova/{id}/{idade} (get). Exemplo http://127.0.0.1:8000/api/classificacao/prova/1/18
 ou para pegar um intervalo entre uma idade e outra http://127.0.0.1:8000/api/classificacao/prova/1/18-25
+
+## Tests
+
+- http://127.0.0.1:8000/api/corredoresProvas (get/post)
+- http://127.0.0.1:8000/api/corredoresProvas/{id} (put/delete/get)
+- http://127.0.0.1:8000/api/provas (get/post)
+- http://127.0.0.1:8000/api/provas/{id} (put/delete/get)
+- http://127.0.0.1:8000/api/resultados (get/post)
+- http://127.0.0.1:8000/api/resultados/{id} (put/delete/get)
+- http://127.0.0.1:8000/api/corredores (get/post)
+- http://127.0.0.1:8000/api/corredores/{id} (put/delete/get)
+- http://127.0.0.1:8000/api/classificacao/prova/{id} (get)
+- http://127.0.0.1:8000/api/classificacao/prova/{id}/{idade} (get). Exemplo http://127.0.0.1:8000/api/classificacao/prova/1/18
+ou para pegar um intervalo entre uma idade e outra http://127.0.0.1:8000/api/classificacao/prova/1/18-25
