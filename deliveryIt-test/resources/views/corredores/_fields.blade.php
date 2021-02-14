@@ -14,7 +14,7 @@
 
       <div class="form-group">
         {!! Form::label('cpf', 'CPF') !!} 
-        {!! Form::text('cpf', $value = isset($corredor) ? $corredor->cpf : null, ['class' => 'form-control', 'placeholder' => 'CPF']) !!}
+        {!! Form::number('cpf', $value = isset($corredor) ? $corredor->cpf : null, ['max'=>'99999999999', 'class' => 'form-control', 'placeholder' => 'CPF', 'required' => true]) !!}
       </div>
 
       <div class="form-group">
