@@ -25,7 +25,7 @@
                                         </tr>
                                     </thead>
                                     @foreach($provas as $prova)
-                                    <tfoot>
+                                    <tbody>
                                         <tr>
                                             <td>{{ $prova->id }}</td>
                                             <td>{{ $prova->tipo_prova }}</td>

@@ -48,7 +48,7 @@
                                         </tr>
                                     </thead>
                                     @foreach($classificacao as $key => $ranking)
-                                    <tfoot>
+                                    <tbody>
                                         <tr>
                                             <td>{{ $ranking->provas_id }}</td>
                                             <td>{{ $ranking->tipo_prova }} km</td>

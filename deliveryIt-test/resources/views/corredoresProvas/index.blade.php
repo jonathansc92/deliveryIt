@@ -25,7 +25,7 @@
                                         </tr>
                                     </thead>
                                     @foreach($corredoresProvas as $corredorProva)
-                                    <tfoot>
+                                    <tbody>
                                         <tr>
                                             <td>{{ $corredorProva->id }}</td>
                                             <td>{{ $corredorProva->corredores["nome"] }}</td>

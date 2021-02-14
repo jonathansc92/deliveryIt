@@ -27,7 +27,7 @@
                                         </tr>
                                     </thead>
                                     @foreach($resultados as $resultado)
-                                    <tfoot>
+                                    <tbody>
                                         <tr>
                                             <td>{{ $resultado->id }}</td>
                                             <td>{{ $resultado->corredores->nome }}</td>

@@ -26,7 +26,7 @@
                                         </tr>
                                     </thead>
                                     @foreach($corredores as $corredor)
-                                    <tfoot>
+                                    <tbody>
                                         <tr>
                                             <td>{{ $corredor->id }}</td>
                                             <td>{{ $corredor->nome }}</td>
