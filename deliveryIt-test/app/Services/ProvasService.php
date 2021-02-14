@@ -6,6 +6,8 @@ use App\Repositories\ProvasRepository;
 use App\Validators\ProvasValidator;
 use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\Exceptions\ValidatorException;
+use Exception;
+use Illuminate\Database\QueryException;
 
 use Illuminate\Http\Request;
 
@@ -40,13 +42,16 @@ class ProvasService {
         
         try {
            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-        //    $request['created_at']
            $this->respository->create($request->all());
-        } catch (ValidatorException $e) {
-            return Response::json([
-                'error'   =>true,
-                'message' =>$e->getMessage()
-            ]);
+
+        } catch (Exception $e) {
+            switch(get_class($e))
+            {
+                case QueryException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case ValidatorException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case Exception::class : return ['success' => false, 'messages' => $e->getMessage()];
+                default : return ['success' => false, 'messages' => get_class($e)];
+            }
         }
     }
 
@@ -55,11 +60,14 @@ class ProvasService {
         try {
            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
            $this->respository->update($request->all(), $id);
-        } catch (ValidatorException $e) {
-            return Response::json([
-                'error'   =>true,
-                'message' =>$e->getMessage()
-            ]);
+        } catch (Exception $e) {
+            switch(get_class($e))
+            {
+                case QueryException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case ValidatorException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case Exception::class : return ['success' => false, 'messages' => $e->getMessage()];
+                default : return ['success' => false, 'messages' => get_class($e)];
+            }
         }
     }
 

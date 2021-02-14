@@ -39,16 +39,21 @@ class CorredoresProvasController extends Controller
 
         \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
 
-        return $this->index();
+        return redirect('corredores-provas');
     }
 
     public function update($id, Request $request){
-        dd($request->all());
-        $this->service->update($request, $id);
-        return $this->index();
+        $update = $this->service->update($request, $id);
+
+        if ($update['success'] === false) {
+            \Toastr::warning($update['messages'], 'Erro', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } 
+
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+
+        return redirect()->back();
     }
 
-    public function delete(){
-
-    }
+    public function delete(){}
 }

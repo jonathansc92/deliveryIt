@@ -30,18 +30,31 @@ class ProvasController extends Controller
     public function show($id){}
 
     public function store(Request $request){
-        $this->service->store($request);
-        return $this->index();
+        $store = $this->service->store($request);
+
+        if ($store['success'] === false) {
+            \Toastr::warning($store['messages'], 'Erro', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+       } 
+
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+
+        return redirect('provas');
     }
 
     public function update($id, Request $request){
-        $this->service->update($request, $id);
-        return $this->index();
+        $update = $this->service->update($request, $id);
+        
+        if ($update['success'] === false) {
+            \Toastr::warning($update['messages'], 'Erro', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } 
+
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
     }
 
-    public function delete(){
-
-    }
+    public function delete(){}
 
     public function dataAjax(Request $request)
     {

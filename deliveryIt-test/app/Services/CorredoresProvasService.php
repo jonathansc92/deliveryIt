@@ -9,7 +9,8 @@ use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\Exceptions\ValidatorException;
 use App\Services\CorredoresService;
 use App\Services\ProvasService;
-use Illuminate\Support\Carbon;
+use Exception;
+use Illuminate\Database\QueryException;
 
 use Illuminate\Http\Request;
 
@@ -66,7 +67,6 @@ class CorredoresProvasService {
             }
         }
       
-
         return ['success' => true];
 
     }
@@ -85,11 +85,15 @@ class CorredoresProvasService {
             $this->respository->create($request->all());
             
         
-        } catch (ValidatorException $e) {
-            return Response::json([
-                'error'   =>true,
-                'message' =>$e->getMessage()
-            ]);
+        } catch (Exception $e) {
+
+            switch(get_class($e))
+            {
+                case QueryException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case ValidatorException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case Exception::class : return ['success' => false, 'messages' => $e->getMessage()];
+                default : return ['success' => false, 'messages' => get_class($e)];
+            }
         }
     }
 
@@ -97,12 +101,22 @@ class CorredoresProvasService {
         
         try {
            $this->validator->with( $request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+           $regras = $this->regras($request);
+
+           if ($regras['success'] === false) {
+                return $regras;
+            }
+
            $this->respository->update($request->all(), $id);
-        } catch (ValidatorException $e) {
-            return Response::json([
-                'error'   =>true,
-                'message' =>$e->getMessage()
-            ]);
+        } catch (Exception $e) {
+            switch(get_class($e))
+            {
+                case QueryException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case ValidatorException::class : return ['success' => false, 'messages' => $e->getMessage()];
+                case Exception::class : return ['success' => false, 'messages' => $e->getMessage()];
+                default : return ['success' => false, 'messages' => get_class($e)];
+            }
         }
     }
 }

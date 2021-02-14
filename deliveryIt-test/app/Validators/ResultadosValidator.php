@@ -4,7 +4,6 @@ namespace App\Validators;
 
 use \Prettus\Validator\LaravelValidator;
 use \Prettus\Validator\Contracts\ValidatorInterface;
-use \Prettus\Validator\Exceptions\ValidatorException;
 
 class ResultadosValidator extends LaravelValidator {
 

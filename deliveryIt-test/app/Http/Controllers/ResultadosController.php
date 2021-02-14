@@ -15,7 +15,6 @@ class ResultadosController extends Controller
     }
 
     public function index(){
-        // dd($this->service->getAll());
         return view('resultados.index')->with(['resultados' => $this->service->getAll() ]);
     }
 
@@ -31,13 +30,29 @@ class ResultadosController extends Controller
     public function show($id){}
 
     public function store(Request $request){
-        $this->service->store($request);
-        return $this->index();
+        $store = $this->service->store($request);
+        
+        if ($store['success'] === false) {
+            \Toastr::warning($update['messages'], 'Erro', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } 
+
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+
+        return redirect('resultados');
     }
 
     public function update($id, Request $request){
-        $this->service->update($request, $id);
-        return $this->index();
+        $update = $this->service->update($request, $id);
+
+        if ($store['success'] === false) {
+            \Toastr::warning($update['messages'], 'Erro', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } 
+        
+        \Toastr::success('Salvo com sucesso', '', ["positionClass" => "toast-top-right"]);
+
+        return redirect()->back();
     }
 
     public function delete(){

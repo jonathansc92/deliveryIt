@@ -17,12 +17,12 @@ class Resultados extends Model
 
     public function corredores()
     {
-        return $this->hasOne(Corredores::class, 'id');
+        return $this->belongsTo(Corredores::class, 'corredores_id', 'id');
     }
 
     public function provas()
     {
-        return $this->hasOne(Provas::class, 'id');
+        return $this->belongsTo(Provas::class, 'provas_id', 'id');
     }
 
 }
