@@ -16,13 +16,13 @@ class CorredoresProvasController extends Controller
 
     public function index()
     {
-        $data = ['data' => $this->service->getAll()];
+        $data = ['data' => [$this->service->getAll(), 201]];
         return response()->json($data);
     }
 
     public function show($id)
     {
-        $data = ['data' => $this->service->get($id)];
+        $data = ['data' => [$this->service->get($id),201]];
         return response()->json($data);
     }
 
