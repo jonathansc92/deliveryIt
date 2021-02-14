@@ -11,7 +11,13 @@
     <script src="{{ asset('template/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
-    <script src="{{ asset('template/js/demo/datatables-demo.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#dataTable').DataTable( {
+                "searching": false
+            });
+        });
+    </script>
 
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     {!! Toastr::message() !!}
