@@ -35,7 +35,6 @@ Service|Hostname|Port number
 ------|---------|-----------
 php-fpm|php-fpm|9000
 MySQL|mysql|3306 (default)
-Redis|redis|6379 (default)
 
 # Docker compose cheatsheet #
 
